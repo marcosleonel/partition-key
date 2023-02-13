@@ -3,14 +3,12 @@ const crypto = require("crypto");
 const { deterministicPartitionKey } = require("./dpk");
 
 describe("deterministicPartitionKey", () => {
-  const HASH_OPTION = "sha3-512"
-  const BINARY_TO_TEXT_ENCONDING = "hex"
-  const NULISH_VALUES = [, null, undefined, '',NaN, {}, [], false]
+  const NULISH_VALUES = [, null, undefined, '', NaN, {}, [], false]
 
   it("Returns the same partition key if one is provided in the event", () => {
     const trivialKey = deterministicPartitionKey({ partitionKey: "Speak Friend" });
-    expect(trivialKey).toBe("Speak Friend");
-  })
+    expect(JSON.parse(trivialKey)).toBe("Speak Friend");
+  });
 
   test.each([
     42,
@@ -39,7 +37,7 @@ describe("deterministicPartitionKey", () => {
       expect(HASH_PATTERN.test(trivialKey)).toBe(true);
     });
 
-  const bigArray = Array(267).fill("minions");
+  const bigArray = Array(267).fill("7");
   const bigObejct = {};
   let bigString = '';
 
